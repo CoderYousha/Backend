@@ -68,6 +68,19 @@ class DatabaseSeeder extends Seeder
             'address' => 'Damascus - Mazah',
         ]);
 
+        /* Technical Doctor */
+        $doctor = User::create([
+            'name' => 'Hasan',
+            'username' => 'hasankhatib',
+            'email' => 'hasan@gmail.com',
+            'password' => Hash::make('123456789'),
+            'phone_number' => '0944122314',
+            'account_type' => 'doctor',
+            'birth_date' => '12-01-1990',
+            'address' => 'Damascus - Mazah',
+            'medical_specialization' => 'Technical',
+        ]);
+
         /* Clinic */
         $clinic = Clinic::create([
             'clinic_name' => 'Heart Clinic',

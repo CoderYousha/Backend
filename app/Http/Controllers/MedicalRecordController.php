@@ -15,6 +15,11 @@ class MedicalRecordController extends Controller
     //Create Medical Record Function
     public function createMedicalRecord(User $user, MedicalRecordRequest $medicalRecordRequest)
     {
+        $check = MedicalRecord::where('patient_id', $user->id)->first();
+        if($check){
+            return error('some thing went wrong', 'This patient already has a medical record', 422);
+        }
+
         $medicalRecord = MedicalRecord::create([
             'patient_id' => $user->id,
             'record_number' => $medicalRecordRequest->record_number,

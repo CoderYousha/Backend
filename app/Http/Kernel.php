@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'patient-auth' => \App\Http\Middleware\PatientAuthentication::class,
         'transfer-auth' => \App\Http\Middleware\TransferAuthentication::class,
         'reservation-auth' => \App\Http\Middleware\ReservationAuthentication::class,
+        'technical-auth' => \App\Http\Middleware\TechincalAuthentication::class,
     ];
 }

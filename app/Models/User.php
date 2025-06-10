@@ -43,9 +43,9 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, DoctorPatient::class, 'doctor_id', 'patient_id');
     }
 
-    public function records()
+    public function record()
     {
-        return $this->hasMany(MedicalRecord::class, 'patient_id', 'id');
+        return $this->hasOne(MedicalRecord::class, 'patient_id', 'id');
     }
 
     public function doctorReservations()
