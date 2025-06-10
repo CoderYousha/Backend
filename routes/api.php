@@ -139,7 +139,7 @@ Route::middleware('check-auth')->group(function () {
         });
     });
 });
-Route::controller(AdvertisementController::class)->middleware('advertisement-auth')->prefix('advertisements')->group(function () {
+Route::controller(AdvertisementController::class)->middleware('check-auth')->prefix('advertisements')->group(function () {
     Route::get('/', 'getAdvertisements');
     Route::get('/{advertisement}', 'getAdvertisementInformation');
 });

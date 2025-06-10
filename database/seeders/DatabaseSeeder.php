@@ -56,6 +56,18 @@ class DatabaseSeeder extends Seeder
             'medical_specialization' => 'Heart',
         ]);
 
+        /* Advertisement */
+        $advertisement = User::create([
+            'name' => 'Ali',
+            'username' => 'alisaleh',
+            'email' => 'ali@gmail.com',
+            'password' => Hash::make('123456789'),
+            'phone_number' => '0947123789',
+            'account_type' => 'advertisement',
+            'birth_date' => '12-01-1980',
+            'address' => 'Damascus - Mazah',
+        ]);
+
         /* Clinic */
         $clinic = Clinic::create([
             'clinic_name' => 'Heart Clinic',
