@@ -116,7 +116,7 @@ class PatientController extends Controller
         $today = new DateTime();
         $age = $today->diff($birth_date)->y;
         $user["age"] = $age;
-        $user = $user->with('records')->find($user->id);
+        $user = $user->with('record')->find($user->id);
 
         return success($user, null);
     }
