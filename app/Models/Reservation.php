@@ -11,17 +11,28 @@ class Reservation extends Model
 
     protected $table = 'reservations';
     protected $fillable = [
+        'clinic_transfer_id',
         'doctor_id',
         'patient_id',
         'date',
         'time',
+        'status',
+        'type',
+        'description'
     ];
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
 
-    public function patient(){
-        return $this->belongsTo(User::class, 'patient_id', 'id');
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
+    }
+
+    public function clinicTransfer()
+    {
+        return $this->belongsTo(Clinic::class, 'clinic_transfer_id', 'id');
     }
 }

@@ -17,7 +17,7 @@ class CheckAuthentication
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('user')->user()) {
+        if (Auth::guard('user')->user() || Auth::guard('patient')->user()) {
             return $next($request);
         }
 

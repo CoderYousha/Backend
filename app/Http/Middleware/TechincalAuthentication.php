@@ -17,7 +17,7 @@ class TechincalAuthentication
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('user')->user()->account_type === 'doctor' && Auth::guard('user')->user()->medical_specialization === 'Technical' && Auth::guard('user')->user()->status === 'activated') {
+        if (Auth::guard('user')->user()->account_type === 'doctor' && (Auth::guard('user')->user()->medical_specialization === 'Technical' || Auth::guard('user')->user()->medical_specialization === 'Radiation') && Auth::guard('user')->user()->status === 'activated') {
             return $next($request);
         }
         return error('some thing went wrong', "you don't have authentication", 502);

@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DoctorPatient extends Model
+class PatientIll extends Model
 {
     use HasFactory;
 
-    protected $table = 'doctors_patients';
+    protected $table = 'patients_ills';
     protected $fillable = [
-        'doctor_id',
         'patient_id',
+        'ill_id'
     ];
 }

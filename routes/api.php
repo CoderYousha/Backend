@@ -9,11 +9,11 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\IllController;
-use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientTransferController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TechnicalController;
 use App\Http\Controllers\WorkDayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +38,7 @@ Route::controller(AuthenticationController::class)->group(function () {
     Route::prefix('profile')->middleware('check-auth')->group(function () {
         Route::get('/', 'profile');
         Route::post('/', 'editProfile');
+        Route::post('/password', 'editPassword');
         Route::post('/logout', 'logout');
     });
 });
@@ -102,16 +103,14 @@ Route::middleware('check-auth')->group(function () {
         Route::post('/{advertisement}', 'editAdvertisement');
         Route::delete('/{advertisement}', 'deleteAdvertisement');
     });
-    Route::controller(PatientController::class)->middleware('reception-auth')->prefix('patients')->group(function () {
+    Route::controller(PatientController::class)->prefix('patients')->group(function () {
         Route::get('/', 'getPatients');
-        Route::get('/{user}', 'getPatientInformation');
-        Route::post('/', 'createPatient');
-        Route::post('/{user}', 'editPatient');
-        Route::post('/activate-deactivate/{user}', 'activateDeactivateAccount');
-    });
-    Route::controller(PatientTransferController::class)->prefix('transfers')->group(function () {
-        Route::get('/{user}', 'getUserTransfers')->middleware('transfer-auth');
-        Route::post('/{patient}/{doctor}', 'patientTransfer')->middleware('reception-auth');
+        Route::get('/{patient}', 'getPatientInformation');
+        Route::middleware('reception-auth')->group(function () {
+            Route::post('/', 'createPatient');
+            Route::post('/{patient}', 'editPatient');
+            Route::post('/activate-deactivate/{user}', 'activateDeactivateAccount');
+        });
     });
     Route::controller(IllController::class)->prefix('ills')->group(function () {
         Route::get('/', 'getIlls');
@@ -122,22 +121,25 @@ Route::middleware('check-auth')->group(function () {
     Route::controller(BehaviorController::class)->prefix('behaviors')->group(function () {
         Route::get('/', 'getHealthyBehaviors');
     });
-    Route::controller(MedicalRecordController::class)->prefix('medical-records')->group(function () {
-        Route::get('/{medicalRecord}', 'getMedicalRecordInformation');
-        Route::post('/{user}', 'createMedicalRecord');
-        Route::post('/update/{medicalRecord}', 'updateMedicalRecord');
-        Route::delete('/{medicalRecord}', 'deleteMedicalRecord');
-    });
     Route::controller(WorkDayController::class)->prefix('work-days')->group(function () {
         Route::get('/{user}', 'getDoctorWorkDays');
     });
     Route::controller(ReservationController::class)->prefix('reservations')->group(function () {
-        Route::get('/{user}', 'getReservations');
+        Route::get('/', 'getReservations');
+        Route::get('/{reservation}', 'getReservationInformation');
         Route::middleware('reservation-auth')->group(function () {
             Route::post('/{doctor}/{patient}', 'createReservation');
-            Route::delete('/{reservation}', 'cancelReservation');
+            Route::post('/{reservation}', 'cancelReservation');
         });
     });
+    Route::controller(TechnicalController::class)->prefix('technicals')->group(function () {
+        Route::get('/{image}', 'getImageInformation');
+        Route::middleware('technical-auth')->group(function () {
+            Route::post('/{patient}', 'uploadImage');
+            Route::delete('/{image}', 'deleteImage');
+        });
+    });
+    Route::post('/update-reservation/{reservation}', [ReservationController::class, 'editReservation']);
 });
 Route::controller(AdvertisementController::class)->middleware('check-auth')->prefix('advertisements')->group(function () {
     Route::get('/', 'getAdvertisements');

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReservationRequest extends FormRequest
+class EditReservationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,8 @@ class ReservationRequest extends FormRequest
             'date' => 'required|date',
             'time' => 'required',
             'type' => 'required',
+            'patient_id' => 'required|exists:patients,id',
+            'doctor_id' => 'required|exists:users,id'
         ];
     }
 }

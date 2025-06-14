@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecordIll extends Model
+class Image extends Model
 {
     use HasFactory;
 
-    protected $table = 'records_ills';
+    protected $table = 'images';
     protected $fillable = [
-        'record_id',
-        'ill_id'
+        'patient_id',
+        'image',
+        'description',
+        'type',
     ];
 }

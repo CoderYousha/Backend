@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('clinic_name');
             $table->string('floor_number');
+            $table->string('image');
             $table->timestamps();
         });
     }

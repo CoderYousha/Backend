@@ -33,33 +33,18 @@ class User extends Authenticatable
         return $this->hasMany(Holiday::class, 'user_id', 'id');
     }
 
-    public function doctors()
-    {
-        return $this->belongsToMany(User::class, DoctorPatient::class, 'patient_id', 'doctor_id');
-    }
-
-    public function patients()
-    {
-        return $this->belongsToMany(User::class, DoctorPatient::class, 'doctor_id', 'patient_id');
-    }
-
-    public function record()
-    {
-        return $this->hasOne(MedicalRecord::class, 'patient_id', 'id');
-    }
-
     public function doctorReservations()
     {
         return $this->hasMany(Reservation::class, 'doctor_id', 'id');
     }
 
-    public function patientReservations()
-    {
-        return $this->hasMany(Reservation::class, 'patient_id', 'id');
-    }
-
     public function workDays()
     {
         return $this->hasMany(WorkDay::class, 'doctor_id', 'id');
+    }
+
+    public function clinic()
+    {
+        return $this->belongsTo(DoctorClinic::class, 'doctor_id', 'id');
     }
 }
