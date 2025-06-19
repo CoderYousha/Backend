@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
@@ -34,7 +35,7 @@ class ReservationController extends Controller
                 Reservation::create([
                     'doctor_id' => $doctor->id,
                     'patient_id' => $patient->id,
-                    'clinic_transfer_id' => $user->account_type == 'doctor' ? $user->clinic->clinic_id : $reservationRequest->clinic_id,
+                    'clinic_transfer_id' => $user && $user->account_type == 'doctor' ? $user->clinic->clinic_id : $reservationRequest->clinic_id,
                     'date' => Carbon::parse($reservationRequest->date),
                     'time' => $reservationRequest->time,
                     'status' => 'activated',
@@ -96,13 +97,18 @@ class ReservationController extends Controller
     }
 
     //Get User Reservations Function
-    public function getReservations()
+    public function getReservations(Request $request)
     {
         $user = Auth::guard('user')->user();
-        if ($user->account_type == 'reception') {
-            $reservations = Reservation::with('patient', 'doctor', 'clinicTransfer')->get();
-        } else if ($user->account_type == 'doctor') {
-            $reservations = $user->doctorReservations()->with('patient', 'clinicTransfer')->get();
+        if ($user) {
+            if ($user->account_type == 'reception') {
+                $reservations = Reservation::with('patient', 'doctor', 'clinicTransfer')->get();
+            } else if ($user->account_type == 'doctor') {
+                $reservations = $user->doctorReservations()->with('patient', 'clinicTransfer')->get();
+            }
+        } else {
+            $user = Auth::guard('patient')->user();
+            $reservations = $user->reservations()->with('clinicTransfer', 'doctor')->where('status', 'LIKE', '%' . $request->status . '%')->get();
         }
         return success($reservations, null);
     }

@@ -45,6 +45,6 @@ class User extends Authenticatable
 
     public function clinic()
     {
-        return $this->belongsTo(DoctorClinic::class, 'doctor_id', 'id');
+        return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
     }
 }

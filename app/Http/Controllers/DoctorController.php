@@ -6,6 +6,7 @@ use App\Http\Requests\DoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
@@ -59,9 +60,13 @@ class DoctorController extends Controller
     }
 
     //Get Doctors Function
-    public function getDoctors()
+    public function getDoctors(Request $request)
     {
-        $doctors = User::where('account_type', 'doctor')->get();
+        if ($request->clinic) {
+            $doctors = User::where('account_type', 'doctor')->where('clinic_id', $request->clinic)->get();
+        } else {
+            $doctors = User::where('account_type', 'doctor')->get();
+        }
 
         return success($doctors, null);
     }
@@ -69,6 +74,6 @@ class DoctorController extends Controller
     //Get Doctor Information Function
     public function getDoctorInformation(User $user)
     {
-        return success($user->with('holidays')->find($user->id), null);
+        return success($user->with('holidays', 'workDays', 'clinic')->find($user->id), null);
     }
 }

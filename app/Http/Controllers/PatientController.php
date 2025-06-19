@@ -91,7 +91,7 @@ class PatientController extends Controller
         $medicines = explode(',', $updatePatientRequest->medicines);
         $behaviors = explode(',', $updatePatientRequest->behaviors);
 
-        $checkIlls = PatientIll::where('patient_id', $patient->id)->whereIn('ill_id', $ills)->get();
+        $checkIlls = PatientIll::where('patient_id', $patient->id)->whereNotIn('ill_id', $ills)->get();
         $checkMedicines = PatientMedicine::where('patient_id', $patient->id)->whereNotIn('medicine_id', $medicines)->get();
         $checkBehaviors = PatientBehavior::where('patient_id', $patient->id)->whereNotIn('behavior_id', $behaviors)->get();
 
@@ -125,7 +125,7 @@ class PatientController extends Controller
                 if (!$check) {
                     PatientBehavior::create([
                         'patient_id' => $patient->id,
-                        'behavior' => $behavior,
+                        'behavior_id' => $behavior,
                     ]);
                 }
             }

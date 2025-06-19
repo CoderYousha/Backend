@@ -60,7 +60,7 @@ class AuthenticationController extends Controller
     //Profile Function
     public function profile()
     {
-        $user = Auth::guard('patient')->user();
+        $user = Auth::guard('patient')->user()->load('ills','medicines','behaviors','images');
         if (!$user) {
             $user = Auth::guard('user')->user();
         }

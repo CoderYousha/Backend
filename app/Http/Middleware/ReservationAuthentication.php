@@ -17,7 +17,9 @@ class ReservationAuthentication
      */
     public function handle(Request $request, Closure $next)
     {
-        if ((Auth::guard('user')->user()->account_type === 'reception' || Auth::guard('user')->user()->account_type === 'patient') && Auth::guard('user')->user()->status === 'activated') {
+        if (Auth::guard('patient')->user() && Auth::guard('patient')->user()->status === 'activated') {
+            return $next($request);
+        } else if ((Auth::guard('user')->user()->account_type === 'reception' || Auth::guard('user')->user()->account_type === 'doctor') && Auth::guard('user')->user()->status === 'activated') {
             return $next($request);
         }
         return error('some thing went wrong', "you don't have authentication", 502);

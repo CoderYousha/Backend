@@ -47,4 +47,8 @@ class Patient extends Authenticatable
     {
         return $this->hasMany(Image::class, 'patient_id', 'id');
     }
+
+    public function reservations(){
+        return $this->hasMany(Reservation::class, 'patient_id', 'id');
+    }
 }

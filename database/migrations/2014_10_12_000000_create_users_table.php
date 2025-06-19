@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('clinic_id')->nullable();
             $table->string('name');
             $table->string('username')->unique()->nullable();
             $table->string('email')->unique()->nullable();
@@ -27,6 +28,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('image')->nullable();
             $table->string('status')->default('activated');
+
+            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->timestamps();
         });
     }

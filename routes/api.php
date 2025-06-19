@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutusController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BehaviorController;
@@ -152,4 +153,7 @@ Route::controller(ClinicController::class)->prefix('clinics')->group(function ()
 Route::controller(DoctorController::class)->prefix('doctors')->group(function () {
     Route::get('/', 'getDoctors');
     Route::get('/{user}', 'getDoctorInformation');
+});
+Route::controller(AboutusController::class)->prefix('aboutus')->group(function (){
+    Route::get('/', 'getAboutus');
 });

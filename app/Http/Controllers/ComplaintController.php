@@ -25,7 +25,7 @@ class ComplaintController extends Controller
     //Create Complaint Function
     public function createComplaint(ComplaintRequest $complaintRequest)
     {
-        $user = Auth::guard('user')->user();
+        $user = Auth::guard('patient')->user();
         Complaint::create([
             'user_id' => $user->id,
             'title' => $complaintRequest->title,
