@@ -85,6 +85,7 @@ class DatabaseSeeder extends Seeder
         $clinic = Clinic::create([
             'clinic_name' => 'Heart Clinic',
             'floor_number' => 1,
+            'image' => "url_image_here",
         ]);
 
         /* Clinic - Doctor */

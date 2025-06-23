@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clinik_transfer_id');
+            $table->unsignedBigInteger('clinic_transfer_id');
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->date('date');
