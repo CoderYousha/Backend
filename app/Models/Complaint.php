@@ -16,8 +16,8 @@ class Complaint extends Model
         'complaint'
     ];
 
-    public function user()
+    public function patient()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Patient::class, 'user_id', 'id');
     }
 }

@@ -11,7 +11,7 @@ class ComplaintController extends Controller
     //Get Complaints Function
     public function getComplaints()
     {
-        $complaints = Complaint::with('user')->get();
+        $complaints = Complaint::with('patient')->get();
 
         return success($complaints, null);
     }

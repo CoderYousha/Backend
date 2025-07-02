@@ -142,7 +142,7 @@ Route::middleware('check-auth')->group(function () {
     });
     Route::post('/update-reservation/{reservation}', [ReservationController::class, 'editReservation']);
 });
-Route::controller(AdvertisementController::class)->middleware('check-auth')->prefix('advertisements')->group(function () {
+Route::controller(AdvertisementController::class)->prefix('advertisements')->group(function () {
     Route::get('/', 'getAdvertisements');
     Route::get('/{advertisement}', 'getAdvertisementInformation');
 });
@@ -154,6 +154,6 @@ Route::controller(DoctorController::class)->prefix('doctors')->group(function ()
     Route::get('/', 'getDoctors');
     Route::get('/{user}', 'getDoctorInformation');
 });
-Route::controller(AboutusController::class)->prefix('aboutus')->group(function (){
+Route::controller(AboutusController::class)->prefix('aboutus')->group(function () {
     Route::get('/', 'getAboutus');
 });
